@@ -1,0 +1,635 @@
+function onOpen() {
+  
+  var ui = SpreadsheetApp.getUi();
+  
+  var menu = ui.createMenu("Add_Employee");
+  menu.addItem("AM", "AM");
+  menu.addItem("APU1", "APU1");
+  menu.addItem("APU2", "APU2");
+  menu.addItem("APU3", "APU3");
+  menu.addItem("BHP","BHP");
+  menu.addItem("Finance", "Finance");
+  menu.addItem("Industrial","Industrial");
+  menu.addItem("IS", "IS");
+  menu.addItem("Logistics", "APU1");
+  menu.addItem("HR", "HRfunc");
+  menu.addItem("Managment", "Managment");
+  menu.addItem("PG", "PG");
+  menu.addItem("PG SQA", "PGSQA");
+  menu.addItem("Production", "Production");
+  menu.addItem("Projects", "Projects");
+  menu.addItem("Purchasing", "Purchasing");
+  menu.addItem("Purchasing P1", "PurchasingP1");
+  menu.addItem("Quality", "QualityF");
+  menu.addItem("R&D", "RandD");
+  menu.addItem("Update", "newUpdate");
+  //menu.addItem("Remove Employee", "removeEmployee")
+  
+  menu.addToUi();
+  
+  /*
+  var submenu = ui.createMenu("Do_not_click");
+  submenu.addItem("xxx", "APU1");
+  menu.addSubMenu(submenu);
+ */
+}
+
+function APU1()
+{
+  var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var lC = ss.getLastColumn();
+  
+  var action = actionQuestion();
+  
+  if(action == 1){
+    
+    var temp = addMoreEmployees();
+    Logger.log(temp);
+    
+    var numOfRows = temp[1] - temp[0] + 1;
+    
+     var mulInfo = ss.getRange(temp[0],1,numOfRows, 11).getValues();
+     //opens APU1Total file
+     var ssTT = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1YwZp-LBiB0UBx9zmaK_f4dib4rRxumNrTMZ3lWk-NXg/edit#gid=0').getActiveSheet(); //Logistics Total Spreadsheet
+     var APU1_Url = "https://docs.google.com/spreadsheets/d/1YwZp-LBiB0UBx9zmaK_f4dib4rRxumNrTMZ3lWk-NXg/edit#gid=0"; //Logistics Total Spreadsheet
+     var lRssTT = ssTT.getLastRow()+1;
+     //copy all the values to the new row
+     //was 26
+     ssTT.getRange(lRssTT, 1,numOfRows,11).setValues(mulInfo);
+     //sort the table - it can be managed by any of the existing columns
+     //ssTT.sort(3);
+    
+    //sheet connected with determined APU chief
+     var urlToNewSheet = Logisticsheets(ss,temp[1]);
+     var newSheet = SpreadsheetApp.openByUrl(urlToNewSheet).getActiveSheet();
+    var xxxx = newSheet.getLastRow()+1;
+     //was 26
+     newSheet.getRange(xxxx,1,numOfRows,11).setValues(mulInfo);
+     //newSheet.sort(3);
+  
+  
+     //import data to Global File from APU1
+     importRanges(APU1_Url,urlToNewSheet,temp[0],temp[1]);
+  
+     //autofill sheet of chief department
+     fillTheChiefSheet(urlToNewSheet);
+    
+    //------------------------------------------------------------------------------------autofill global file------------------------------------------------
+    var lRcolL = lastRowForColumn(ss,12);
+    var colL = ss.getRange("L3:L4");
+    colL.autoFill(ss.getRange(3,12,lRcolL-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+
+    //col AK
+    var colY = ss.getRange("AK3:AK4");
+    colY.autoFill(ss.getRange(3,37,lRcolL-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+    //col Z
+    var colZ = ss.getRange("AL3:AL4");
+    colZ.autoFill(ss.getRange(3,38,lRcolL-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+   
+    //col AM
+    var colZ = ss.getRange("AM3:AM4");
+    colZ.autoFill(ss.getRange(3,39,lRcolL-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+    //------------------------------------------------------------------------------------autofill APU1 file------------------------------------------------
+  
+    var lRcolLts = lastRowForColumn(ssTT,10);
+    
+    var colLts = ssTT.getRange("L3:L4");
+    colLts.autoFill(ssTT.getRange(3,12,lRcolLts-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+    //col AK
+    var colYts = ssTT.getRange("AK3:AK4");
+    colYts.autoFill(ssTT.getRange(3,37,lRcolLts-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+    
+    //col AL
+    var colALts = ssTT.getRange("AL3:AL4");
+    colALts.autoFill(ssTT.getRange(3,38,lRcolLts-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+    
+    //col AM
+    var colZts = ssTT.getRange("AM3:AM4");
+    colZts.autoFill(ssTT.getRange(3,39,lRcolLts-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+    
+    
+  }else{    
+  
+  //get the no. of the row where new user is
+  var cc = ss.getActiveCell().getRow();
+  //copy all the values from specified row
+  //changed from (cc,1,1,26) to (cc,1,1,12)
+  var info = ss.getRange(cc, 1, 1, 11).getValues();
+  
+  //opens APU1Total file
+  var ssTT = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1YwZp-LBiB0UBx9zmaK_f4dib4rRxumNrTMZ3lWk-NXg/edit#gid=0').getActiveSheet();
+  var APU1_Url = "https://docs.google.com/spreadsheets/d/1YwZp-LBiB0UBx9zmaK_f4dib4rRxumNrTMZ3lWk-NXg/edit#gid=0";
+  var lRssTT = ssTT.getLastRow()+1;
+  //copy all the values to the new row
+  //was 26
+  ssTT.getRange(lRssTT, 1,1,11).setValues(info);
+  //sort the table - it can be managed by any of the existing columns
+  //ssTT.sort(3);
+  
+  //sheet connected with determined APU chief
+  var urlToNewSheet = Logisticsheets(ss,cc);
+  var temptemp2=urlToNewSheet;
+  var newSheet = SpreadsheetApp.openByUrl(urlToNewSheet).getActiveSheet();
+    var xxxx = newSheet.getLastRow()+1;
+  //was 26
+  newSheet.getRange(xxxx,1,1,11).setValues(info);
+  //newSheet.sort(3);
+  
+  
+  //import data to Global File from APU1
+  importRange(APU1_Url,urlToNewSheet);
+  
+  //autofill sheet of chief department
+  fillTheChiefSheet(urlToNewSheet);
+  
+  //------------------------------------------------------------------------------------autofill global file------------------------------------------------
+    var lRcolL = lastRowForColumn(ss,12);
+    var colL = ss.getRange("L3:L4");
+    colL.autoFill(ss.getRange(3,12,lRcolL-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+    //col AK
+    var colY = ss.getRange("AK3:AK4");
+    colY.autoFill(ss.getRange(3,37,lRcolL-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+    //col Z
+    var colZ = ss.getRange("AL3:AL4");
+    colZ.autoFill(ss.getRange(3,38,lRcolL-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+   
+    //col AM
+    var colZ = ss.getRange("AM3:AM4");
+    colZ.autoFill(ss.getRange(3,39,lRcolL-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+    //------------------------------------------------------------------------------------autofill APU1 file------------------------------------------------
+  
+    var lRcolLts = lastRowForColumn(ssTT,10);
+    var colLts = ssTT.getRange("L3:L4");
+    colLts.autoFill(ssTT.getRange(3,12,lRcolLts-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+    //col AK
+    var colYts = ssTT.getRange("AK3:AK4");
+    colYts.autoFill(ssTT.getRange(3,37,lRcolLts-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+    
+    //col AL
+    var colALts = ssTT.getRange("AL3:AL4");
+    colALts.autoFill(ssTT.getRange(3,38,lRcolLts-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+    
+    //col AM
+    var colZts = ssTT.getRange("AM3:AM4");
+    colZts.autoFill(ssTT.getRange(3,39,lRcolLts-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  }
+  
+  //ssTT.sort(3);
+  //newSheet.sort(3);
+}
+
+//function looks for spreadsheet assigned to specified chief of department site
+function Logisticsheets(sheet,row){
+  
+  var rz = 'https://docs.google.com/spreadsheets/d/1A6zObhs0DhZHQYR13-1ia11BQJWzrfgsH4mv4Gq2nJM/edit#gid=0';
+  var rzStr = "Derabin Jarosław";
+  var aa = 'https://docs.google.com/spreadsheets/d/1uvhdhgnfOspHl-JTUMzIbCJ11w157Nw6VmOFYd8n1J4/edit#gid=0';
+  var aaStr = "Firek Paweł";
+  var ebs = 'https://docs.google.com/spreadsheets/d/1vPW-gM9ava1B-lGN14J05Dl8L6Wtni8kYQGheEu4Nvc/edit#gid=0';
+  var ebsStr = "Grześkowiak Magdalena";
+  var mj = 'https://docs.google.com/spreadsheets/d/1eAi6CWR-nyWkMAV2TNKTlNglZLa30rJWjioLeMYLY8I/edit#gid=0';
+  var mjStr = "Kanarek Michał";
+  var mk = '';
+  var mkStr = "Młotkowska Honorata";
+  var jk = 'https://docs.google.com/spreadsheets/d/1euXilgKIco0vAp2kB7RrTT6k7setGG3_FvRVVuU_HbI/edit#gid=0';
+  var jkStr = "Moskwa Piotr";
+  var kk = 'https://docs.google.com/spreadsheets/d/1wK8i2dOw72C93OwEhJ9PtZxnm21JEHuxVB-QMq1RkkY/edit#gid=0';
+  var kkStr = "Owsianka Józef";
+  var dl = 'https://docs.google.com/spreadsheets/d/1QXHU3LbTv_LXp2qEpIjbxTYHY2DcbKA1PEMtzqKVln8/edit#gid=0';
+  var dlStr = "Radoń Grzegorz";
+  var mm = 'https://docs.google.com/spreadsheets/d/1B_dIU9DPrWroEUQxge2DlgSlcMzIp6v4tSF5TvFJqRM/edit#gid=0';
+  var mmStr = "Skalny Krzysztof";
+  var tm = 'https://docs.google.com/spreadsheets/d/14DRnQN95YFINPzV-d8HfHCO3yg6YUFIX0hLiAF8it7w/edit#gid=0';
+  var tmStr = "Talaga Aldona";
+  var tk = 'https://docs.google.com/spreadsheets/d/1kImk1gny0sqd6YMkvWeCmbMEJmijS06HzwIOg7eLbDg/edit#gid=0';
+  var tkStr = "Theuer Katarzyna";
+  var wd = 'https://docs.google.com/spreadsheets/d/16y6z3GSygGRfj8RF9JhgzAq808cA5XFALHfygDA2jV0/edit#gid=0';
+  var wdStr = "Wąsiel Dominik";
+  
+  var dict = {key1: rzStr,
+              key2: aaStr,
+              key3: ebsStr,
+              key4: mjStr,
+              key5: mkStr,
+              key6: jkStr,
+              key7: kkStr,
+              key8: dlStr,
+              key9: mmStr,
+              key10: tmStr,
+              key11: tkStr,
+              key12: wdStr};
+  
+  var dictUrl = {key1: rz,
+              key2: aa,
+              key3: ebs,
+              key4: mj,
+              key5: mk,
+              key6: jk,
+              key7: kk,
+              key8: dl,
+              key9: mm,
+              key10: tm,
+                 key11: tk,
+                 key12:wd};
+  
+  
+  for(const [key, value] of Object.entries(dict)){
+    if(sheet.getRange(row,3).getValue() == value)
+    {
+      var keyDict = key;
+    }
+  }
+  
+  for(const [key, value] of Object.entries(dictUrl)){
+    if(key == keyDict){return value;}
+  }
+   
+}
+
+function importRange(sheet,sheetCh){
+  var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var curCell = ss.getActiveCell().getRow();
+  var nameToImport = ss.getRange(curCell,2).getValue();
+  var url = sheet.toString();
+  var url2 = sheetCh.toString();
+  
+  var ts = SpreadsheetApp.openByUrl(sheet).getActiveSheet();
+  var tsRange = ts.getRange(1,1,ts.getLastRow(),ts.getLastColumn()).getValues();
+  var tsLastRow = ts.getLastRow();
+  
+  for(var i in tsRange){
+    for(var j in tsRange[i]){
+      //Logger.log(tsRange[i][j]);
+      if(tsRange[i][j] == nameToImport){
+        var arr = tsRange[i];
+        //Logger.log(nameToImport + " exists in Department spreadsheet with following data: " + tsRange[i]);
+        arr.splice(0,12);
+        arr.splice(12,2);
+      }
+    }
+  }
+  
+  
+  for(var k=12; k<36; k++)
+  {
+    var monthFormulaGlobal = "=ArrayFormula(vlookup(B" + curCell + ";IMPORTRANGE(\""+ url2 +"\";\"N-1!$B:$AI\");"+ k + ";0))";
+    var monthFormulaDep = "=ArrayFormula(vlookup(B" + tsLastRow + ";IMPORTRANGE(\""+ url2 +"\";\"N-1!$B:$AI\");"+ k + ";0))";
+    ss.getRange(curCell,k+1).setFormula(monthFormulaGlobal);
+    ts.getRange(tsLastRow,k+1).setFormula(monthFormulaDep);
+    k+=1;
+  }
+  
+  /*
+  //create new array and pass old array to obtain 2D array in order to pass values by "setValues"
+  var newArr = [];
+  newArr.push(arr);
+  
+  //copy data to global file
+  ss.getRange(curCell,13,1,13).setValues(newArr);
+  */
+}
+
+//function for multiple rows should be different
+//t0 begginning of the range (up)
+//t1 bottom of the range (down)
+function importRanges(sheet,sheetCh,t0,t1){
+  var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var newT0 = parseInt(t0);
+  var newT1 = parseInt(t1);
+  var diff = newT1-newT0+1;
+  var iter = newT1+1;
+  var namesToImport = [];
+  var rowToImport = [];
+  for(var i=newT0; i<iter; i++){
+    namesToImport.push(ss.getRange(i,2).getValue());
+    rowToImport.push(ss.getRange(i,2).getRow());
+  }
+  //var nameToImport = ss.getRange(curCell,2).getValue();
+  
+  var url = sheet.toString();
+  var url2 = sheetCh.toString();
+  
+  var ts = SpreadsheetApp.openByUrl(sheet).getActiveSheet();
+  var tsRange = ts.getRange(1,1,ts.getLastRow(),ts.getLastColumn()).getValues();
+  var tsLastRow = ts.getLastRow()-diff+1;
+  
+  /*
+  for(var i in tsRange){
+    for(var j in tsRange[i]){
+      //Logger.log(tsRange[i][j]);
+      if(tsRange[i][j] == nameToImport){
+        var arr = tsRange[i];
+        //Logger.log(nameToImport + " exists in Department spreadsheet with following data: " + tsRange[i]);
+        arr.splice(0,12);
+        arr.splice(12,2);
+      }
+    }
+  }*/
+  
+  for(var j=0; j<namesToImport.length; j++){
+     for(var k=12; k<36; k++)
+     {
+       var rowToPut = tsLastRow+j;
+        var monthFormulaGlobal = "=ArrayFormula(vlookup(B" + rowToImport[j] + ";IMPORTRANGE(\""+ url2 +"\";\"N-1!$B:$AI\");"+ k + ";0))";
+        var monthFormulaDep = "=ArrayFormula(vlookup(B" + rowToPut + ";IMPORTRANGE(\""+ url2 +"\";\"N-1!$B:$AI\");"+ k + ";0))";
+        ss.getRange(rowToImport[j],k+1).setFormula(monthFormulaGlobal);
+        ts.getRange(rowToPut,k+1).setFormula(monthFormulaDep);
+       k+=1;
+     }
+  }
+  /*
+  //create new array and pass old array to obtain 2D array in order to pass values by "setValues"
+  var newArr = [];
+  newArr.push(arr);
+  
+  //copy data to global file
+  ss.getRange(curCell,13,1,13).setValues(newArr);
+  */
+}
+
+//function receives url to specified sheet assigned to the chief of department and connects to it
+function fillTheChiefSheet(url){
+  
+  var ss = SpreadsheetApp.openByUrl(url).getSheetByName('N-1');
+  
+  //get Last Row of the column with copied data from Main File
+  var lRc = lastRowForColumn(ss,2);
+
+  
+  
+  //col L - sum(J:K)
+  var lRcolL = lastRowForColumn(ss,12);
+  if(lRcolL > 3){
+  var colL = ss.getRange("L3:L4");
+  colL.autoFill(ss.getRange(3,12,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+    
+   //3 additional columns H, I, J
+    
+    var colH = ss.getRange("H3:H4");
+    colH.autoFill(ss.getRange(3,8,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+    
+    var colI = ss.getRange("I3:I4");
+    colI.autoFill(ss.getRange(3,9,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+    
+    var colJ = ss.getRange("J3:J4");
+    colJ.autoFill(ss.getRange(3,10,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //----------------------------------------------------------------------Months-------------------------------------
+  
+  
+  //col M
+  var colM = ss.getRange("M3:M4");
+  colM.autoFill(ss.getRange(3,13,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col N
+ // var colN = ss.getRange("N2:N3");
+  //colN.autoFill(ss.getRange(2,14,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col O
+  var colO = ss.getRange("O3:O4");
+  colO.autoFill(ss.getRange(3,15,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col P
+ // var colP = ss.getRange("P2:P3");
+ // colP.autoFill(ss.getRange(2,16,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col Q
+  var colQ = ss.getRange("Q3:Q4");
+  colQ.autoFill(ss.getRange(3,17,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col R
+ // var colR = ss.getRange("R2:R3");
+ // colR.autoFill(ss.getRange(2,18,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col S
+  var colS = ss.getRange("S3:S4");
+  colS.autoFill(ss.getRange(3,19,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col T
+ // var colT = ss.getRange("T2:T3");
+ // colT.autoFill(ss.getRange(2,20,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col U
+  var colU = ss.getRange("U3:U4");
+  colU.autoFill(ss.getRange(3,21,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col V
+  //var colV = ss.getRange("V2:V3");
+  //colV.autoFill(ss.getRange(2,22,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col W
+  var colW = ss.getRange("W3:W4");
+  colW.autoFill(ss.getRange(3,23,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col X
+  //var colX = ss.getRange("X2:X3");
+  //colX.autoFill(ss.getRange(2,24,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col Y
+  var colY = ss.getRange("Y3:Y4");
+  colY.autoFill(ss.getRange(3,25,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col Z
+  //var colZ = ss.getRange("Z2:Z3");
+  //colZ.autoFill(ss.getRange(2,26,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col AA
+  var colAA = ss.getRange("AA3:AA4");
+  colAA.autoFill(ss.getRange(3,27,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col AC
+  var colAC = ss.getRange("AC3:AC4");
+  colAC.autoFill(ss.getRange(3,29,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col AE
+  var colAE = ss.getRange("AE3:AE4");
+  colAE.autoFill(ss.getRange(3,31,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col AG
+  var colAG = ss.getRange("AG3:AG4");
+  colAG.autoFill(ss.getRange(3,33,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col AI
+  var colAI = ss.getRange("AI3:AI4");
+  colAI.autoFill(ss.getRange(3,35,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col AK
+  var colAK = ss.getRange("AK3:AK4");
+  colAK.autoFill(ss.getRange(3,37,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col AL
+  var colAL = ss.getRange("AL3:AL4");
+  colAL.autoFill(ss.getRange(3,38,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col AM
+  var colAM = ss.getRange("AM3:AM4");
+  colAM.autoFill(ss.getRange(3,39,lRc-2), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  }
+ 
+  /*
+  //-----------------------------------------------------added for tests------------------------
+  //col AA
+  var colAA = ss.getRange("AA2:AA3");
+  colY.autoFill(ss.getRange(2,27,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col AB
+  var colAB = ss.getRange("AB2:AB3");
+  colZ.autoFill(ss.getRange(2,28,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  
+  //get Last Row of the column where formula has to be filled
+  var lRdesiredColumn = lastRowForColumn(ss,13);
+  
+  var sourceRange = ss.getRange(2, 13,lRc-(lRc-lRdesiredColumn + 1));
+  sourceRange.autoFillToNeighbor(SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col Y
+  var lRcolY = lastRowForColumn(ss,25);
+  var colY =  ss.getRange(2, 25,lRc-(lRc-lRcolY + 1)); 
+  colY.autoFillToNeighbor(SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  //col Z
+  var lRcolZ = lastRowForColumn(ss,26);
+  var colZ =  ss.getRange(2, 26,lRc-(lRc-lRcolZ + 1));
+  colZ.autoFillToNeighbor(SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  */
+  
+  
+  //---------------------------------------------Fill the columns in the Month sheets------------------------
+  autoFillMonth(url,"January",lRc);
+  autoFillMonth(url,"February", lRc);
+  autoFillMonth(url,"March", lRc);
+  autoFillMonth(url,"April", lRc);
+  autoFillMonth(url,"May", lRc);
+  autoFillMonth(url,"June", lRc);
+  autoFillMonth(url,"July", lRc);
+  autoFillMonth(url,"August", lRc);
+  autoFillMonth(url,"September", lRc);
+  autoFillMonth(url,"October", lRc);
+  autoFillMonth(url,"November", lRc);
+  autoFillMonth(url,"December", lRc);
+  
+}
+
+function lastRowForColumn(sheet, column){
+  // Get the last row with data for the whole sheet.
+  var numRows = sheet.getLastRow();
+  
+  // Get all data for the given column
+  var data = sheet.getRange(1, column, numRows).getValues();
+  
+  // Iterate backwards and find first non empty cell
+  for(var f = data.length - 1 ; f >= 0 ; f--){
+    if (data[f][0] != null && data[f][0] != ""){
+      return f + 1;
+    }
+  }
+}
+
+function autoFillMonth(url,sheetName,lRc)
+{
+  var ss = SpreadsheetApp.openByUrl(url).getSheetByName(sheetName);
+  
+  var colA = ss.getRange("A3:A4");
+  colA.autoFill(ss.getRange(3,1,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  var colB = ss.getRange("B3:B4");
+  colB.autoFill(ss.getRange(3,2,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  var colAH = ss.getRange("AH3:AH4");
+  colAH.autoFill(ss.getRange(3,34,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  
+  var colAI = ss.getRange("AI3:AI4");
+  colAI.autoFill(ss.getRange(3,35,lRc-1), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+}
+
+function addMoreEmployees(){
+  
+  var ui = SpreadsheetApp.getUi();
+  var response = ui.prompt('Row index of the upper row to be taken', 'Put the number of the upper row where range starts', ui.ButtonSet.OK_CANCEL);
+  var answer = [];
+
+// Process the user's response.
+if (response.getSelectedButton() == ui.Button.OK) {
+  var uppRow = response.getResponseText();
+  answer.push(uppRow);
+} else {
+  Logger.log('The user clicked the close button in the dialog\'s title bar.');
+}
+  
+  var ui2 = SpreadsheetApp.getUi();
+  var response2 = ui.prompt('Row index of the bottom row to be taken', 'Put the number of the bottom row where range ends', ui.ButtonSet.OK_CANCEL);
+
+// Process the user's response.
+if (response2.getSelectedButton() == ui2.Button.OK) {
+  var bottRow2 = response2.getResponseText();
+  answer.push(bottRow2);
+} else {
+  Logger.log('The user clicked the close button in the dialog\'s title bar.');
+}
+  //SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(row2,4).setValue("Here is the ROW you are looking for!");
+  
+  //copy_more_rows(nRow,nRow2);
+  
+  return answer;
+  
+}
+
+function actionQuestion(){
+  /*
+  var ui = SpreadsheetApp.getUi();
+  var response = ui.prompt('How many employees to copy?', ui.ButtonSet.YES_NO_CANCEL);
+  //ui.prompt(prompt, buttons)
+
+
+// Process the user's response.
+if (response.getSelectedButton() == ui.Button.YES) {
+  var yes = response.getResponseText();
+  return yes;
+} else if (response.getSelectedButton() == ui.Button.NO) {
+  var no = response.getResponseText();
+  return no;
+}else{
+  Logger.log('The user clicked the close button in the dialog\'s title bar.');
+}
+  
+  Logger.log(yes,no);
+  */
+  
+  var ui = SpreadsheetApp.getUi();
+  
+  var result = ui.alert('Do you want to copy multiple rows?', ui.ButtonSet.YES_NO_CANCEL);
+  
+  var answer = [];
+  
+  if(result == ui.Button.YES){
+    
+    answer.push(1);
+  }else if(result == ui.Button.NO){
+   
+    answer.push(0);
+  }else{
+   Logger.log('The user clicked the close button in the dialog\'s title bar.'); 
+  }
+    
+  Logger.log(answer);
+  
+  return answer;
+}
+
+
+//add date to the particular sheet
+function addDate(ss){
+  
+  ss.getRange(1,2).setValue(Utilities.formatDate(new Date(), "GMT+1", "dd/MM/yyyy"));
+  
+}
