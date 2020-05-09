@@ -6,9 +6,6 @@ function newUpdate(){
   var depart = ss.getRange(row, 5).getValue();
   
   var answer = getDepart(depart);
- 
-  var x = 1;
-  
 }
 
 function getDepart(type){
@@ -108,22 +105,13 @@ function fillTheColumns(urls){
 //functions for each department and files assigned to them
 //the first URL in the array has to be Department URL
 function logUrls(){
-  var L = ['https://docs.google.com/spreadsheets/d/1YwZp-LBiB0UBx9zmaK_f4dib4rRxumNrTMZ3lWk-NXg/edit?ts=5e875b81#gid=0','https://docs.google.com/spreadsheets/d/1A6zObhs0DhZHQYR13-1ia11BQJWzrfgsH4mv4Gq2nJM/edit?ts=5e875b81#gid=0','https://docs.google.com/spreadsheets/d/1uvhdhgnfOspHl-JTUMzIbCJ11w157Nw6VmOFYd8n1J4/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1vPW-gM9ava1B-lGN14J05Dl8L6Wtni8kYQGheEu4Nvc/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1eAi6CWR-nyWkMAV2TNKTlNglZLa30rJWjioLeMYLY8I/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1euXilgKIco0vAp2kB7RrTT6k7setGG3_FvRVVuU_HbI/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1wK8i2dOw72C93OwEhJ9PtZxnm21JEHuxVB-QMq1RkkY/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1QXHU3LbTv_LXp2qEpIjbxTYHY2DcbKA1PEMtzqKVln8/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1B_dIU9DPrWroEUQxge2DlgSlcMzIp6v4tSF5TvFJqRM/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/14DRnQN95YFINPzV-d8HfHCO3yg6YUFIX0hLiAF8it7w/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1kImk1gny0sqd6YMkvWeCmbMEJmijS06HzwIOg7eLbDg/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/16y6z3GSygGRfj8RF9JhgzAq808cA5XFALHfygDA2jV0/edit#gid=0'];
+  var L = ['url1','url2'];
   return L;
 }
 
 function HRUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1Xg9vVm8Amtbo6K21w3Zm2V1NzWRZiq2gHg5j0UCWGWs/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -131,24 +119,7 @@ function HRUrls(){
 
 function RDUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/10WoNTp5BF-pg6TU2_ub9yiJxoXXMuh4wLkVbpj7ghDA/edit?ts=5e875c1a#gid=0',
-           'https://docs.google.com/spreadsheets/d/1KCSFOmjnZSvR4640JH7wDtJcWIDxVGhXs1HGPc65YBU/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1RLaKexDncGggBQ_d6vyTAx8GjPku0nFwkfs9swZ9qbU/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1RdYxv90aLsPp9leeYCDZDyCSrvVzss5D4Nz0wHtwmEE/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/140wg8x_TRDZwIefWa6dEL_KP6AWhg4Nu_A672qG9jh8/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/10YnT61DJGH3LquYZ-hEQqM-IJ0djlL8A5TmCnDMfzCQ/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/18lvuvQtx33Y1ZvbBW9A27JmhCyzGuo_hS2mseQPvZcI/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1e3o1sFNK5qZCZYXmCySxitZjJhiB7idBI4Hx145O5Bo/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1j6OLF-616RuOuxqKhhQkdJFTPOYuoaRgl_vOBK1Muh8/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1db65t7T2fiqAgWSmi9PLXcD6C1jEy6Ud9UVQoyX70bA/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1n6QoMr5oLb9S8XZimnWVS7lNsjMu-kdv2cZO_HtOqlk/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/19sUqRMUkLp9zzD4eo5w5Q7g2Kq4farx0-PrSO1rDl8A/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1SYDv4icxDoiz0Rn6DugHkpMspi0Fl96O9FOKvR1yOPc/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1P8yRu9Opfd9lP_bGpM7TA72qNG6o1gcvdiCA222APHk/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1Tlbqgx2DTGzJjfLBRKI6-8KeLOArgrS5xBWCiiwz114/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1RGDJ46PMDDwLq8XTlT5JLs_XSLdLwgKBUIotmUfSdCI/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1HN2TtT7s8YtdKOXQT4P_fCmIZLvPD61UKAXxZXKkAxg/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1rvVVg6_2Ftd0MGlodZwULpGx_VJTnAij_be1_lACccg/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -156,10 +127,7 @@ function RDUrls(){
 
 function QUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1nI2FaBOMFOfhQsCmv5zIsqTC-wmFQb-rpc-sAHgyEBg/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1n-v095_tjMv5H_bDITw-3--l94y1QqiWCLBVNdS7-C8/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1Dqu4t8b787x5ljN_2brrRglf8ULmbXhEiwMby1yZpPw/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1eImyeFbMIj01f2A6Ohb0hzsOvDDCDvvT9mHrb7Dokzw/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -167,9 +135,7 @@ function QUrls(){
 
 function PP1Urls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1glK772aYL8-9KZwj-6Xi8HuYv5Rb_BRuyDHx8AFWigg/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1AmfV8hm-CAEf9nTcfqmDYyFGoLD2uX153krtrjcxjdg/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/16ktJ0z_TZ2nuu-9iK20tq1jlGiWOiRLIKsYKY9GR9Ck/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -177,7 +143,7 @@ function PP1Urls(){
 
 function PurUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1i0OksiXisIxqeAVf44gZ-YzyuqpuiMizr8tghJoAM-w/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -185,9 +151,7 @@ function PurUrls(){
 
 function ProjUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/14oAvZpL-nkcwKIxs7nRpyWorKvU6YyyUDkpVrXMp7d8/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1Xsc8DUyOhSBdewbb4ySvzrQ48p6I9I6T7h8nXhXO1qs/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1npATrLNXUjVDgHvzYEzTC3h7IJWBrjPz2oOgqrwSLUg/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -195,7 +159,7 @@ function ProjUrls(){
 
 function ProdUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1VYWjZrVDHgcb5b4G8pDV-K1FIuc7SoBnHhd0a1ipKVM/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -203,7 +167,7 @@ function ProdUrls(){
 
 function PGSqaUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/11xvEs2DA086RWGaUmheLSdVkeeO1nLi06wjJcBYlYDY/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -211,7 +175,7 @@ function PGSqaUrls(){
 
 function PGUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1INwcUj56iywHoylyraXLpnRixWxxw_8jYcdLX5LUZ3M/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -219,7 +183,7 @@ function PGUrls(){
 
 function ManaUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1PvyXU8E6VwucJMkHJgsjsvAkTkda72tRfLse3af1q4Q/edit#gid=0'];
+  vvar L = ['url1','url2'];
   
   return L;
   
@@ -227,7 +191,7 @@ function ManaUrls(){
 
 function ISUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1QkRNwpbE2NTE8Z4wYTakir2Vjy5MsfoRuKxWM6IeTGI/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -235,11 +199,7 @@ function ISUrls(){
 
 function IndUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1W3PUsrsQzecvrFyDZa-gtztV-6z-MVX7M8ERrchZI5Q/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1b-knz2Bl9_X8k0A9eVK-0AxAkTCDGAyI81AVnGtkvW0/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1Ql8lECWxDhrbwT5UtJ0EsYodHjNWeZces7Wzxui1lKo/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1FwbIJ4HIV91h91CXnVcpT04E_vCF4UoBkoAYYk-29Us/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1vAtmovcICk-Zow1r5cyU3wTyC_2Hrfqtj1A4tKkCB1Q/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -247,11 +207,7 @@ function IndUrls(){
 
 function FIUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1tRdXhAuKvuCF18DgZHOEnApKpQMKRQMCpTF-iWK2x8I/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/13F9nx4b7l8yMuOoiAGapq74--lPPAACJTSPuzXCeQGU/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1DATVFn5W90tGSIFUZHG0bUlzKHwsgqqqUWgE2JnBUzk/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1AX6Zt2Mhrd98gMI2tIOxE2K0moAWCo1_glEKtMWME9M/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1hJpxqP3s93bXdr937mkMassksvmdLj6rJceUYWqp-Tc/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -259,7 +215,7 @@ function FIUrls(){
 
 function BHPUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1m32vGH6EbUHmNrEEZmPd-SEPuSmtenGHd2Ggrz33lxg/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -267,17 +223,7 @@ function BHPUrls(){
 
 function APU3Urls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1P8I199ziGU_bJWFI2-HtYVel2w7BasMK3Fm_CJNekqA/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1ClZEjJf9UTaeQC7nCZ5lHelIzicJ6YuIjcQkEkSkVkU/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/16-9h4fv04RZJuonSZIqXIVfe8A_KxIB_Tr5rHugruEM/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1u-_k3R8hHY44mn_k5HcAzyaaY0Tnz4NlccjGbN3EECY/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1ERVxHjjPakOh0eh96bjgmTXNbIbRhXDaQQPU-SGTw3A/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1Xi1DaQ7u6kE1GI73G4ByLdeEJzja3uylbWg8lzkCmOc/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1rLFjKX3EByoifRkmy5RWGRLdt5Y1OkQOCq6q_OnmotI/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1iiEyWpAaQlFOiZiENM1_4r5bvC59AeJ5WFOP2oq_ah4/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1o4pWZ_ceAJMiApxucVBKMvhNiUBFI7S_0zuR0rXOYcI/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1qHIwDZeAlVSvd0ybeT6ZDU2InZd5DZdyzWXv1rPzPLc/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1jAetqoYvhJfVzwHenoSxGb6tM5EZy2heMwOi81IVoYU/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -285,14 +231,7 @@ function APU3Urls(){
 
 function APU2Urls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1cvzFEO3ehupyMSyHOY9Mp0KlA0s_WSVtUEg1gb7MUXs/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1ma-Hs2wIyuDa9JGayGe9PRgYVVE7w-u-ritWkP9Afv8/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1K1xeg8K4bDxJH65qbWY6Ul7WZ9Xveu4h5p_Aeo22sTM/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1fRU8Hld-Tp2HQpwr1V7aYM3YzJQivgLlRWva7cS6L5Y/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1DLxi-692hj6fWNoUce3xpIAne52UWcTHD6I1ivRh9Dw/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1Lne2czF4Rxng0ab8QX_TVkuZEo5CoS2tL-tJoaHqE38/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1G3qwSfKDk2imT5UV1y58ggzeRHWgWJg46M0ThW5Zy1c/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/188Y9z9ImsckPZOHFeKo2BExsi1lFiHTa_jVFKW1zVQ8/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -300,24 +239,7 @@ function APU2Urls(){
 
 function APU1Urls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1JKCpBsJxWZvd8AJPhS60lrZ7bcMQZ9t6-LajiR7kzZ0/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1tcd9wObqTInfyrm5OK0OhECF5MWEBQOhcuGcastKySk/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1wBKLU2fy5ZhuUV_VRL2bye0E1Q06MCjzoiKmLLuOC8o/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1tQYxm-A0AT1vTgKmEUgLkNw49JuxN-FR-NLa-zGlE0Q/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1nyHT0TYKrHguwPG6FdoVfy2GdOrKsJvJkbSg_l-jaw4/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1_BxCXm-4uIcj9ed1Q4XgyvhMNq-UkMvdTiEDvWt9_wA/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1LdZ2HgA6g4LPyDWN8AYlJNmHNEnGOITYrtKUAib2F_4/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/15DurnxxHmaz1eA1PHwFDRed0oSzq0F4wdHR9Vn-xWyM/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/17ZezqbDbN0RIFCranBVaYSm67LKrS-1rWy5e8tGCRJA/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1mX52O34FTUZn_sEkpjrqQuMsN4jASFSuIBvXvF-4SBI/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1ql83YwEkbzzrs-t1Yr2_u16EIrvpOQ1e58uf7Vjs0y0/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1c4naDwwy8yOFznRJ5qXL1z_A2pRVXODEsPqQid0BohM/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1Ry06Q7L6kP16DKF2Xnm0sfYVGMYTafU3VteJzIj6D1Q/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1wKPos5nI1YlYOqwi73HKHucHpQc3RsUKiMCZZhsUGkc/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1uVhnyK6nDyWB-l3dnMRP1eyjMbnY0hJTnptnxvQmQ8A/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1mUY7zIQKe9Vzr7I29U2t1JT2IDpWeylMFueKex7C96g/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1H6d4wo8V8vr9jqrb7FlevXeDThYLdnNNpt-f28kYypw/edit#gid=0',
-           'https://docs.google.com/spreadsheets/d/1E6za6hPyFE47XFGRB2QOxIW6oiJGMR1kg0ocj_xg3nw/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
@@ -325,7 +247,7 @@ function APU1Urls(){
 
 function AMUrls(){
  
-  var L = ['https://docs.google.com/spreadsheets/d/1NQPjcaxzSHT6-k-3DnZZ0C_NBdMCnyBAr8M6d4JAPKw/edit#gid=0'];
+  var L = ['url1','url2'];
   
   return L;
   
